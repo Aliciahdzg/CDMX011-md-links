@@ -1,24 +1,27 @@
 #!/usr/bin/env node
 
-const files = require('./argPath');
+const getfiles = require('./readDir');
+const files = require('./readFile');
 
 
-function mdLinks(path, options) {
-
-}
+module.exports = function mdLinks(path, options) {}
 
 if (process.argv.slice(2).length >= 1) {
   const directory = process.argv[2];
-  // const argValidate = process.argv.slice(2)[1];
-  files.getFiles(directory, (err, filteredList) => {
+  getfiles.getFilesPromise(directory)
+    .then(function (filteredPath) { files.readFiles(filteredPath) })
+
+
+
+  /*getfiles(directory, (err, filteredList) => {
     if (err) return console.error(err);
 
-    files.readfiles(filteredList, (err, result) => {
+    files(filteredList, (err, result) => {
       if (err) return console.error(err);
-      console.log(result);
+      //console.log(result);
 
     })
-  })
+  })*/
 
   /**/
 } else {
