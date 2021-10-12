@@ -1,39 +1,35 @@
 const fs = require('fs');
 
+const readFiles = (mdfiles) => {
+  const linksFound = []
+  mdfiles.forEach(file => {
+      console.log("READING FILE ", file)
+      fileData = fs.readFileSync(file, 'utf8')
+      const result = fileData.split('\n');
 
-const readFiles = (file) => {
-  console.log('Starting md files analisis: '.concat(file, '================================'));
-  return new Promise((resolve, reject) => {
-    file.forEach(actualfile => {
-      console.log('Reading file: '.concat(actualfile));
-      fs.readFile(actualfile, 'utf8', (err, string) => {
-        //if (err) return reject(err);
-        const result = string.split('\n');
-        console.log(result.length);
-        resolve(result);
-        return (err) ? reject(err) : resolve(result);
+      result.forEach(line => {
+        if (line.includes('http') === true && line.includes('![') === false && line.includes('href') == false) {
+          const splitData = line.split('](');
+          if (splitData.length >= 2) {
+            let link = splitData[1].replace(')', "").replace('(', "").trim()
+            if (link.includes(' ')) {
+              const justLink = link.split(' ')[0].replace(',', '').replace('.', '').trim()
+              link = justLink
+            }
+            const text = splitData[0].replace('[', "").replace('*', "").trim()
+            let model = {}
+            model['text'] = text
+            model['href'] = link
+            model['file'] = file
+            linksFound.push(model)
+          }
+        }
       })
     })
-  })
+    /*linksFound.forEach(actual => {
+      const links = actual.href
+      console.log(links)
+    })*/
+  return linksFound
 }
-
-
-
-function readfiles(file, callback) {
-  console.log('Starting md files analisis: '.concat(file, '================================'));
-  file.forEach(actualfile => {
-    console.log('Reading file: '.concat(actualfile));
-    fs.readFile(actualfile, 'utf8', (err, string) => {
-      if (err) {
-        console.error(err);
-        return err
-      }
-      const result = string.split('\n');
-      console.log(result.length);
-      return callback(null, result);
-    })
-  })
-}
-
-module.exports.readFiles = readFiles;
-module.exports.readfiles = readfiles;
+module.exports.readFiles = readFiles

@@ -1,29 +1,23 @@
 #!/usr/bin/env node
 
 const getfiles = require('./readDir');
-const files = require('./readFile');
+const read = require('./readFile');
+const fs = require('fs');
+
+const dir = process.argv[2];
 
 
-module.exports = function mdLinks(path, options) {}
+module.exports = function mdLinks(path, options) {
 
-if (process.argv.slice(2).length >= 1) {
-  const directory = process.argv[2];
-  getfiles.getFilesPromise(directory)
-    .then(function (filteredPath) { files.readFiles(filteredPath) })
+}
 
-
-
-  /*getfiles(directory, (err, filteredList) => {
-    if (err) return console.error(err);
-
-    files(filteredList, (err, result) => {
-      if (err) return console.error(err);
-      //console.log(result);
-
-    })
-  })*/
-
-  /**/
+if (fs.statSync(dir).isDirectory()) {
+  const mdFiles = getfiles(dir);
+  mdFiles.length === 0 ? new Error('No hay archivos md') : console.log(mdFiles);
+  const parsedData = read.readFiles(mdFiles);
+  console.log(parsedData)
+} else if (fs.statSync(path).isFile()) {
+  read.readFiles(dir)
 } else {
   console.log('argumentos inválidos')
 }
