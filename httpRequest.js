@@ -3,6 +3,7 @@ const axios = require('axios');
 
 
 const requestStatus = (data) => {
+  const statusList = [];
   data.forEach(async(link) => {
     try {
       let req = await axios.get(link.href)
@@ -13,11 +14,15 @@ const requestStatus = (data) => {
     } catch (e) {
       //console.log(link.href, e.message)
       link['status'] = e.message
-      link['ok'] = 'fail'
+      link['fail'] = 'fail'
     }
-    return link
-
+    //console.log(link)
+    statusList.push(link)
+      // return link
   })
+  return statusList
 }
 
-module.exports.requestStatus = requestStatus
+module.exports = {
+  requestStatus
+}
