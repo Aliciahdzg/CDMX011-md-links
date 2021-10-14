@@ -6,7 +6,8 @@
     "chalk": "^4.1.2",
     "figlet": "^1.5.2",
     "inquirer": "^8.1.5",
-    "markdown-it": "^12.2.0"
+    "markdown-it": "^12.2.0",
+    "minimist": "^1.2.5"
   },
   "bin": "index.js"
 }

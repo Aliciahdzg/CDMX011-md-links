@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 
-module.exports = getFilesSync = (dir) => {
+const getFiles = (dir) => {
   //console.log('Starting path analisis: '.concat(dir, '==================================='))
   const filteredPath = []
   fs.readdirSync(dir).forEach(file => {
@@ -10,8 +10,8 @@ module.exports = getFilesSync = (dir) => {
       filteredPath.push(path.join(dir, file));
     }
     try {
-      if (fs.lstatSync(otherDir).isDirectory) {
-        let b = getFilesSync(otherDir)
+      if (fs.lstatSync(otherDir).isDirectory()) {
+        let b = getFiles(otherDir)
         if (b.length > 0) {
           b.forEach(file => {
             filteredPath.push(file);
@@ -23,4 +23,8 @@ module.exports = getFilesSync = (dir) => {
     }
   })
   return filteredPath
+}
+
+module.exports = {
+  getFiles
 }
