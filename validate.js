@@ -1,4 +1,4 @@
-const mdLinks = (path, option) => {
+const validate = (obj) => {
   return new Promise((resolve, reject) => {
 
   })
