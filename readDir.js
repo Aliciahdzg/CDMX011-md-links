@@ -11,9 +11,9 @@ const getFiles = (dir) => {
     }
     try {
       if (fs.lstatSync(otherDir).isDirectory()) {
-        let b = getFiles(otherDir)
-        if (b.length > 0) {
-          b.forEach(file => {
+        let moreFiles = getFiles(otherDir)
+        if (moreFiles.length > 0) {
+          moreFiles.forEach(file => {
             filteredPath.push(file);
           })
         }

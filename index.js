@@ -1,23 +1,38 @@
 #!/usr/bin/env node
 
+const figlet = require('figlet');
 const { statSync } = require('fs');
 const { getFiles } = require('./readDir');
-const { readFiles } = require('./readFile');
-const { requestStatus } = require('./httpRequest.js')
+const { readFiles, readFilePrueba } = require('./readFile');
+const { requestStatus, request } = require('./httpRequest.js')
 
 const dir = process.argv[2];
 
+
+const mdLinks = (path, options) => {
+
+}
+
+
+
 if (statSync(dir).isDirectory()) {
+  console.log('Analizing directory: ', dir, '-----------------------------------------')
   const mdFiles = getFiles(dir);
   mdFiles.length === 0 ? new Error('No hay archivos md') : console.log(mdFiles);
+  console.log('Parsing links from md files: ----------------------------------')
   const parsedData = readFiles(mdFiles);
-  console.log(parsedData);
-  const objStatus = requestStatus(parsedData)
-  console.log(objStatus);
+  console.log('Requesting links status: -------------------------------------')
+    //const objStatus = requestStatus(parsedData)
+    //console.log(Promise.all(objStatus));
+  request(parsedData)
+    .then((status) => {
+      console.log(status);
+    })
 
 } else if (statSync(dir).isFile()) {
   console.log('es un archivo')
-  readFiles(dir)
+  const parsedData = readFilePrueba(dir)
+  request(parsedData)
 } else {
   console.log('argumentos inválidos')
 }
