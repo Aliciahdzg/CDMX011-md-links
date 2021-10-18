@@ -27,8 +27,8 @@ function readFiles(mdfiles) {
           }
           const text = splitData[0].replace('[', "").replace('*', "").trim()
           let model = {}
-          model['text'] = text
           model['href'] = link
+          model['text'] = text
           model['file'] = file
           linksFound.push(model)
         }
@@ -63,8 +63,8 @@ const readFilePrueba = (mdfiles) => {
         }
         const text = splitData[0].replace('[', "").replace('*', "").trim()
         let model = {}
-        model['text'] = text
         model['href'] = link
+        model['text'] = text
         model['file'] = mdfiles
         linksFound.push(model)
       }
