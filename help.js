@@ -10,9 +10,7 @@ const menus = {
 }
 
 module.exports = (args) => {
-  const menu = args._[0] === 'help' ?
-    args._[1] :
-    args._[0]
+  const menu = args[0] === 'help'
 
-  console.log(menus[menu] || menus.main)
+  return menus[menu] || menus.main
 }

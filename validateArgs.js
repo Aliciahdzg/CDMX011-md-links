@@ -24,12 +24,15 @@ const validateArgs = (args) => {
   }
   if (parsedArgs.stats || parsedArgs.s) {
     opt = 'stats';
+    return opt
   }
   if (parsedArgs.validate && parsedArgs.stats) {
     opt = 'validate_stats';
+    return opt
   }
   if (parsedArgs.help || parsedArgs.h) {
     opt = 'help';
+    return opt
   }
 }
 

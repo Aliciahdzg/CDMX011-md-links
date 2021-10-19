@@ -19,13 +19,13 @@ const mdLinks = (path, opt) => {
   return new Promise((resolve, reject) => {
     const mdFiles = getFiles(dir);
     const parsedData = readFiles(mdFiles);
+    let data = readFilePrueba(path)
+
     switch (opt) {
       case 'dirOnly':
         resolve(parsedData);
         break;
       case 'fileOnly':
-        let data = readFilePrueba(path)
-          //console.log(data)
         resolve(data);
         break;
       case 'validate_stats':
@@ -38,7 +38,7 @@ const mdLinks = (path, opt) => {
         resolve('Estas son tus estadisticas')
         break
       case 'help':
-        resolve(require('./help.js')(args))
+        resolve(require('./help.js')(opt))
         break
       default:
         reject(opt.concat('is not a valid command'))
@@ -46,8 +46,9 @@ const mdLinks = (path, opt) => {
   })
 }
 
-mdLinks(dir, opt).then(links => console.log(links))
-
+mdLinks(dir, opt)
+  .then(links => console.log(links))
+  .catch(err => console.error(err))
 
 
 

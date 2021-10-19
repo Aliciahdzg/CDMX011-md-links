@@ -40,7 +40,7 @@ function readFiles(mdfiles) {
 
 const readFilePrueba = (mdfiles) => {
   const linksFound = []
-  console.log(mdfiles)
+  console.log(mdfiles.length)
   fileData = fs.readFileSync(mdfiles, 'utf8')
   const result = fileData.split('\n')
 
