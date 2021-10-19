@@ -5,20 +5,61 @@ const { statSync } = require('fs');
 const { getFiles } = require('./readDir');
 const { readFiles, readFilePrueba } = require('./readFile');
 const { requestStatus } = require('./httpRequest.js')
+const { validateArgs } = require('./validateArgs');
 
-const dir = process.argv[2];
+const slicedArgs = process.argv.slice(2);
+const dir = slicedArgs[0];
+let opt = validateArgs(slicedArgs);
+
+console.log(opt);
 
 
 
-if (statSync(dir).isDirectory()) {
+const mdLinks = (path, opt) => {
+  return new Promise((resolve, reject) => {
+    const mdFiles = getFiles(dir);
+    const parsedData = readFiles(mdFiles);
+    switch (opt) {
+      case 'dirOnly':
+        resolve(parsedData);
+        break;
+      case 'fileOnly':
+        let data = readFilePrueba(path)
+          //console.log(data)
+        resolve(data);
+        break;
+      case 'validate_stats':
+        resolve('Estas son tus validaciones con estadisticas')
+        break
+      case 'validate':
+        resolve(requestStatus(parsedData))
+        break
+      case 'stats':
+        resolve('Estas son tus estadisticas')
+        break
+      case 'help':
+        resolve(require('./help.js')(args))
+        break
+      default:
+        reject(opt.concat('is not a valid command'))
+    }
+  })
+}
+
+mdLinks(dir, opt).then(links => console.log(links))
+
+
+
+
+
+
+/*if (statSync(dir).isDirectory()) {
   console.log('Analizing directory: ', dir, '-----------------------------------------')
   const mdFiles = getFiles(dir);
   mdFiles.length === 0 ? new Error('No hay archivos md') : console.log(mdFiles);
   console.log('Parsing links from md files: ----------------------------------')
   const parsedData = readFiles(mdFiles);
   console.log('Requesting links status: -------------------------------------')
-    //const objStatus = requestStatus(parsedData)
-    //console.log(Promise.all(objStatus));
   requestStatus(parsedData).then((status) => {
     console.log(status);
   })
@@ -31,29 +72,4 @@ if (statSync(dir).isDirectory()) {
   })
 } else {
   console.log('argumentos inválidos')
-}
-
-/*function mdLinks(path) {
-  console.log(path)
-  switch (path) { // && process.argv.slice(2) < 4
-    case directorio:
-      console.log('Si es un directorio')
-        //const mdFiles = getFiles(path);
-        //console.log(mdFiles);
-      break
-  }
 }*/
-/* switch (dir) { // && process.argv.slice(2) < 4
-  case fs.statSync(dir).isDirectory():
-    const mdFiles = getFiles(dir);
-    console.log(mdFiles);
-    break
-    //mdFiles.length === 0 ? new Error('No hay archivos md') : console.log(mdFiles);
-    //const parsedData = readFiles(mdFiles);
-    //console.log(parsedData)
-    requestStatus(parsedData)
-
-
-
-
-} */

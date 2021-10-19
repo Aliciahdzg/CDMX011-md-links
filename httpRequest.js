@@ -11,7 +11,7 @@ const requestStatus = async(data) => {
       console.log(data[i].href, req.status)
     } catch (e) {
       console.log(data[i].href, e.message)
-      data[i]['status'] = e.status
+      data[i]['status'] = e.message.split('code ')[-1]
       data[i]['fail'] = e.message
     }
     statusList.push(data[i])
