@@ -9,10 +9,7 @@ const menus = {
     `
 }
 
-module.exports = (args) => {
-  const menu = args._[0] === 'help' ?
-    args._[1] :
-    args._[0]
-
-  console.log(menus[menu] || menus.main)
+module.exports = {
+  menus,
+  //return menus.main
 }

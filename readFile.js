@@ -1,11 +1,11 @@
-const fs = require('fs');
+const { readFileSync } = require('fs');
 
 function readFiles(mdfiles) {
   const linksFound = []
 
   mdfiles.forEach(file => {
     console.log('READING FILE ', file)
-    fileData = fs.readFileSync(file, 'utf8')
+    fileData = readFileSync(file, 'utf8')
     const result = fileData.split('\n');
 
     result.forEach(line => {
@@ -25,10 +25,11 @@ function readFiles(mdfiles) {
             let fixedLink = link.slice(0, -1)
             link = fixedLink
           }
-          const text = splitData[0].replace('[', "").replace('*', "").trim()
+          const text = splitData[0].replace('[', '').replace('*', '').replace(']', '').trim()
+            //console.log(text)
           let model = {}
-          model['href'] = link
           model['text'] = text
+          model['href'] = link
           model['file'] = file
           linksFound.push(model)
         }
@@ -39,9 +40,11 @@ function readFiles(mdfiles) {
 }
 
 const readFilePrueba = (mdfiles) => {
+
+  console.log('entra a readFilePrueba')
   const linksFound = []
   console.log(mdfiles)
-  fileData = fs.readFileSync(mdfiles, 'utf8')
+  fileData = readFileSync(mdfiles, 'utf8')
   const result = fileData.split('\n')
 
   result.forEach(line => {
@@ -63,8 +66,8 @@ const readFilePrueba = (mdfiles) => {
           }
           const text = splitData[0].replace('[', "").replace('*', "").trim()
           let model = {}
-          model['href'] = link
           model['text'] = text
+          model['href'] = link
           model['file'] = mdfiles
           linksFound.push(model)
         }

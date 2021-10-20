@@ -1,11 +1,13 @@
 #!/usr/bin/env node
 
-const figlet = require('figlet');
-const { statSync } = require('fs');
+//const figlet = require('figlet');
+//const { statSync } = require('fs');
 const { getFiles } = require('./readDir');
-const { readFiles, readFilePrueba } = require('./readFile');
+const { readFiles } = require('./readFile');
 const { requestStatus } = require('./httpRequest.js')
 const { validateArgs } = require('./validateArgs');
+const { menu } = require('./help')
+const { stats } = require('./stats')
 
 const slicedArgs = process.argv.slice(2);
 const dir = slicedArgs[0];
@@ -13,32 +15,30 @@ let opt = validateArgs(slicedArgs);
 
 console.log(opt);
 
-
-
 const mdLinks = (path, opt) => {
+  const mdFiles = getFiles(path);
+  const parsedData = readFiles(mdFiles);
   return new Promise((resolve, reject) => {
-    const mdFiles = getFiles(dir);
-    const parsedData = readFiles(mdFiles);
     switch (opt) {
-      case 'dirOnly':
+      case 'pathOnly':
         resolve(parsedData);
-        break;
-      case 'fileOnly':
-        let data = readFilePrueba(path)
-          //console.log(data)
-        resolve(data);
         break;
       case 'validate_stats':
         resolve('Estas son tus validaciones con estadisticas')
+        requestStatus(parsedData).then((links) => {
+          console.log(links)
+        });
         break
       case 'validate':
+        console.log('Validando links')
         resolve(requestStatus(parsedData))
         break
       case 'stats':
-        resolve('Estas son tus estadisticas')
+        console.log('Estas son tus estadisticas')
+        resolve(stats(parsedData))
         break
       case 'help':
-        resolve(require('./help.js')(args))
+        resolve(menu)
         break
       default:
         reject(opt.concat('is not a valid command'))
@@ -46,8 +46,9 @@ const mdLinks = (path, opt) => {
   })
 }
 
-mdLinks(dir, opt).then(links => console.log(links))
-
+mdLinks(dir, opt)
+  .then(links => console.log(links))
+  .catch(err => console.error(err))
 
 
 
@@ -66,7 +67,8 @@ mdLinks(dir, opt).then(links => console.log(links))
 
 } else if (statSync(dir).isFile()) {
   console.log('es un archivo')
-  const parsedData = readFilePrueba(dir)
+  const mdFiles = getFiles(dir);
+  const parsedData = readFiles(mdFiles)
   requestStatus(parsedData).then((status) => {
     console.log(status);
   })
