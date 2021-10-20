@@ -8,7 +8,7 @@ const requestStatus = async(data) => {
 
       data[i]['status'] = req.status
       data[i]['ok'] = req.statusText
-      console.log(data[i].href, req.status)
+        //console.log(data[i].href, req.status)
     } catch (e) {
       console.log(data[i].href, e.message)
       data[i]['status'] = e.message

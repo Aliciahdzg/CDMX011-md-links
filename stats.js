@@ -1,18 +1,15 @@
-const { requestStatus } = require('./httpRequest')
-
-requestStatus(parsedData).then((status) => {
-  console.log(status.href);
-})
-
 const stats = (data) => {
   const total = data.length
-  const unique = 0
-
-  if (data.href.includes(!data.href)) {
-    unique += 1
-  }
-  console.log('Total: '.concat(total, '\n', 'Unique: ', { unique }))
-    //return 'Total: '.concat(total, '\n', 'Unique: ', { unique })
+  const unique = new Set();
+  //console.log(data)
+  data.forEach(link => {
+      unique.add(link.href)
+    })
+    //console.log('Total: '.concat(total, '\n', 'Unique: ', unique.size))
+    /**/
+  return 'Total: '.concat(total, '\n', 'Unique: ', unique.size)
 }
 
-stats()
+module.exports = {
+  stats,
+}

@@ -5,17 +5,17 @@ const { verifyPath } = require('./verifyDirFile')
 
 const validateArgs = (args) => {
   let parsedArgs = minimist(args);
-  let argsLength = Object.keys(parsedArgs).length
-  console.log(parsedArgs);
-  console.log(Object.keys(parsedArgs).length)
-  let opt = '';
-  const path = parsedArgs._[0]
+  let argsLength = Object.keys(args).length
+  console.log(args);
+  //console.log(Object.keys(args).length)
+  let opt = args[1];
+  const path = args[0]
     // console.log(path);
   const dirOrFile = verifyPath(path);
   //console.log(dirOrFile);
 
   if (argsLength === 1) {
-    opt = dirOrFile;
+    opt = 'pathOnly';
     return opt
   }
   if (parsedArgs.validate || parsedArgs.v) {

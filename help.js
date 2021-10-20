@@ -9,8 +9,7 @@ const menus = {
     `
 }
 
-module.exports = (args) => {
-  const menu = args[0] === 'help'
-
-  return menus[menu] || menus.main
+module.exports = {
+  menus,
+  //return menus.main
 }

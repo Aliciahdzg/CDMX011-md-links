@@ -1,0 +1,3 @@
+const statsValidate = (obj) => {
+
+}
