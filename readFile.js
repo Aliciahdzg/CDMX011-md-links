@@ -4,7 +4,7 @@ function readFiles(mdfiles) {
   const linksFound = []
 
   mdfiles.forEach(file => {
-    console.log('READING FILE ', file)
+    // console.log('READING FILE ', file)
     fileData = readFileSync(file, 'utf8')
     const result = fileData.split('\n');
 

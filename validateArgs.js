@@ -6,8 +6,6 @@ const { verifyPath } = require('./verifyDirFile')
 const validateArgs = (args) => {
   let parsedArgs = minimist(args);
   let argsLength = Object.keys(args).length
-  console.log(args);
-  //console.log(Object.keys(args).length)
   let opt = args[1];
   const path = args[0]
     // console.log(path);
@@ -16,24 +14,20 @@ const validateArgs = (args) => {
 
   if (argsLength === 1) {
     opt = 'pathOnly';
-    return opt
   }
-  if (parsedArgs.validate || parsedArgs.v) {
+  if (parsedArgs.validate && !parsedArgs.stats && !parsedArgs.s || parsedArgs.v && !parsedArgs.s && !parsedArgs.stats) {
     opt = 'validate';
-    return opt
   }
-  if (parsedArgs.stats || parsedArgs.s) {
+  if (parsedArgs.stats && !parsedArgs.validate && !parsedArgs.v || parsedArgs.s && !parsedArgs.validate && !parsedArgs.v) {
     opt = 'stats';
-    return opt
   }
-  if (parsedArgs.validate && parsedArgs.stats) {
+  if (parsedArgs.validate && parsedArgs.stats || parsedArgs.s && parsedArgs.v || parsedArgs.validate && parsedArgs.s || parsedArgs.stats && parsedArgs.v) {
     opt = 'validate_stats';
-    return opt
   }
   if (parsedArgs.help || parsedArgs.h) {
     opt = 'help';
-    return opt
   }
+  return opt
 }
 
 module.exports = {
