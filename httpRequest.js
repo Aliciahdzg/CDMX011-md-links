@@ -10,7 +10,7 @@ const requestStatus = async(data) => {
       data[i]['ok'] = req.statusText
         //console.log(data[i].href, req.status)
     } catch (e) {
-      console.log(data[i].href, e.message)
+      //console.log(data[i].href, e.message)
       data[i]['status'] = e.message
       data[i]['fail'] = 'fail'
     }

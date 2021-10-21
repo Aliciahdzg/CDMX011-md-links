@@ -1,16 +1,13 @@
-const { statSync } = require('fs');
-const { getFiles } = require('./readDir');
-const { readFiles, readFilePrueba } = require('./readFile');
-const { requestStatus } = require('./httpRequest.js')
-const args = minimist(process.argv.slice(3));
+const minimist = require('minimist');
+const args = minimist(process.argv.slice(2));
 
 let opt = args._[1]
-const path = args._[0]
+let path = args._[0]
 
 if (args.length === 1) {
   opt = 'pathOnly'
 }
-if (args.validate || args.v) {
+if (args.validate && !args.stats || args.v && ) {
   opt = 'validate';
 }
 if (args.stats || args.s) {
@@ -26,16 +23,14 @@ if (args.help || args.h) {
 const mdLinks = (path, opt) => {
   return new Promise((resolve, reject) => {
     switch (opt) {
-      case pathOnly:
+      case 'pathOnly':
         resolve('Tus archivos')
         break;
       case 'validate_stats':
         resolve('Estas son tus validaciones con estadisticas')
         break
       case 'validate':
-        resolve(requestStatus(parsedData).then((status) => {
-          console.log(status);
-        }))
+        resolve('Tus links validados')
         break
       case 'stats':
         resolve('Estas son tus estadisticas')
@@ -44,10 +39,10 @@ const mdLinks = (path, opt) => {
         resolve(require('./help.js')(args))
         break
       default:
-        reject(opt.concat('is not a valid command'))
+        reject('is not a valid command')
     }
   })
 }
 
 
-mdLinks(dir, opt).then(result => console.log(result))
+mdLinks(path, opt).then(result => console.log(result))

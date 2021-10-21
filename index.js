@@ -4,16 +4,15 @@
 //const { statSync } = require('fs');
 const { getFiles } = require('./readDir');
 const { readFiles } = require('./readFile');
-const { requestStatus } = require('./httpRequest.js')
+const { requestStatus } = require('./httpRequest.js');
 const { validateArgs } = require('./validateArgs');
-const { menu } = require('./help')
-const { stats } = require('./stats')
+const { menu } = require('./help');
+const { stats } = require('./stats');
+const { statsValidate } = require('./statsValidate');
 
 const slicedArgs = process.argv.slice(2);
 const dir = slicedArgs[0];
 let opt = validateArgs(slicedArgs);
-
-console.log(opt);
 
 const mdLinks = (path, opt) => {
   const mdFiles = getFiles(path);
@@ -24,17 +23,25 @@ const mdLinks = (path, opt) => {
         resolve(parsedData);
         break;
       case 'validate_stats':
-        resolve('Estas son tus validaciones con estadisticas')
-        requestStatus(parsedData).then((links) => {
-          console.log(links)
-        });
+        const [unique, stats] = statsValidate(parsedData)
+          //console.log(stats)
+        resolve(requestStatus(unique).then(data => {
+          let brokenLinks = 0
+          data.forEach(link => {
+            if (link.status < 200 || link.status > 299 || typeof link.status === 'string') {
+              brokenLinks += 1
+
+            }
+          })
+          return stats.concat('\n', 'Broken: ', brokenLinks)
+        }))
         break
       case 'validate':
         console.log('Validando links')
         resolve(requestStatus(parsedData))
         break
       case 'stats':
-        console.log('Estas son tus estadisticas')
+        //console.log('Estas son tus estadisticas')
         resolve(stats(parsedData))
         break
       case 'help':
