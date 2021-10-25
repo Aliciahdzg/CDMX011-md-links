@@ -7,8 +7,10 @@ const validateArgs = (args) => {
   let parsedArgs = minimist(args);
   let argsLength = Object.keys(args).length
   let opt = args[1];
-  const path = args[0]
-    // console.log(path);
+  let path = args[0];
+  const argsList = ['validate' + 'stats', 'v' + 's', 'validate' + 's', 'v' + 'stats'];
+  //console.log(path);
+  //console.log(argsLength)
   const dirOrFile = verifyPath(path);
   //console.log(dirOrFile);
 
@@ -24,10 +26,10 @@ const validateArgs = (args) => {
   if (parsedArgs.validate && parsedArgs.stats || parsedArgs.s && parsedArgs.v || parsedArgs.validate && parsedArgs.s || parsedArgs.stats && parsedArgs.v) {
     opt = 'validate_stats';
   }
-  if (parsedArgs.help || parsedArgs.h) {
+  if (parsedArgs.help && !parsedArgs.validate && !parsedArgs.stats || parsedArgs.h && !parsedArgs.s && !parsedArgs.v || parsedArgs.help && !parsedArgs.validate && !parsedArgs.s || parsedArgs.help && !parsedArgs.v && !parsedArgs.s || parsedArgs.help && !parsedArgs.validate && !parsedArgs.s || parsedArgs.help && !parsedArgs.v && !parsedArgs.stats || parsedArgs.h && !parsedArgs.validate && !parsedArgs.stats || parsedArgs.h && !parsedArgs.validate && !parsedArgs.s) {
     opt = 'help';
   }
-  return opt
+  return opt;
 }
 
 module.exports = {

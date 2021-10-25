@@ -1,4 +1,4 @@
-const menus = {
+const menu = {
   main: `
     outside [command] <options>
 
@@ -10,6 +10,5 @@ const menus = {
 }
 
 module.exports = {
-  menus,
-  //return menus.main
+  menu,
 }

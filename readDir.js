@@ -19,8 +19,8 @@ const getFiles = (dir) => {
             })
           }
         }
-      } catch {
-
+      } catch (err) {
+        console.error('Path needed to continue')
       }
     })
   } else if (statSync(dir).isFile()) {
