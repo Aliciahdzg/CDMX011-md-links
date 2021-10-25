@@ -1,48 +1,59 @@
-const minimist = require('minimist');
-const args = minimist(process.argv.slice(2));
+const { getFiles } = require('./readDir');
+const { readFiles } = require('./readFile');
+const { requestStatus } = require('./httpRequest.js');
+const { menu } = require('./help');
+const { stats } = require('./stats');
+const { statsValidate } = require('./statsValidate');
+const chalk = require('chalk');
 
-let opt = args._[1]
-let path = args._[0]
-
-if (args.length === 1) {
-  opt = 'pathOnly'
-}
-if (args.validate && !args.stats || args.v && ) {
-  opt = 'validate';
-}
-if (args.stats || args.s) {
-  opt = 'stats';
-}
-if (args.validate && args.stats) {
-  opt = 'validate_stats';
-}
-if (args.help || args.h) {
-  opt = 'help';
-}
 
 const mdLinks = (path, opt) => {
+
   return new Promise((resolve, reject) => {
     switch (opt) {
       case 'pathOnly':
-        resolve('Tus archivos')
+        const mdFiles = getFiles(path);
+        const parsedData = readFiles(mdFiles);
+        resolve(parsedData);
         break;
       case 'validate_stats':
-        resolve('Estas son tus validaciones con estadisticas')
+        const files = getFiles(path);
+        const parsed = readFiles(files);
+        const [unique, partialStats] = statsValidate(parsed)
+        console.log('Loading stats validate ');
+        resolve(requestStatus(unique).then(data => {
+          let brokenLinks = 0
+          data.forEach(link => {
+            if (link.status < 200 || link.status > 299 || typeof link.status === 'string') {
+              brokenLinks += 1
+            }
+          })
+          const result = {}
+          result['Broken'] = brokenLinks
+          partialStats.push(result);
+          return partialStats
+        }))
         break
       case 'validate':
-        resolve('Tus links validados')
+        const md = getFiles(path);
+        const data = readFiles(md);
+        console.log('Loading validate ')
+        resolve(requestStatus(data))
         break
       case 'stats':
-        resolve('Estas son tus estadisticas')
+        //console.log('Estas son tus estadisticas')
+        const filesMD = getFiles(path);
+        const filesData = readFiles(filesMD);
+        resolve(stats(filesData))
         break
       case 'help':
-        resolve(require('./help.js')(args))
+        resolve(menu.main)
         break
       default:
-        reject('is not a valid command')
+        reject(opt.concat(' is not a valid command'))
     }
   })
 }
-
-
-mdLinks(path, opt).then(result => console.log(result))
+module.exports = {
+  mdLinks,
+}

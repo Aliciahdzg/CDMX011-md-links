@@ -2,20 +2,25 @@ const axios = require('axios');
 
 const requestStatus = async(data) => {
   let statusList = [];
+
   for (let i = 0; i < data.length; i++) {
     try {
       let req = await axios.get(data[i].href)
 
       data[i]['status'] = req.status
       data[i]['ok'] = req.statusText
-        //console.log(data[i].href, req.status)
+      process.stdout.write('.');
     } catch (e) {
-      //console.log(data[i].href, e.message)
-      data[i]['status'] = e.message
-      data[i]['fail'] = 'fail'
+
+      data[i]['status'] = e.message;
+      data[i]['fail'] = 'fail';
+
+      process.stdout.write('.');
+
     }
     statusList.push(data[i])
   }
+  console.log('');
   return statusList
 }
 

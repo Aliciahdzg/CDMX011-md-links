@@ -11,8 +11,13 @@ const statsValidate = (obj) => {
       broken.push(obj)
     })
     //console.log('Total: '.concat(total, '\n', 'Unique: ', unique.size))
-  const stats = 'Total: '.concat(total, '\n', 'Unique: ', unique.size)
-  return [broken, stats]
+  partialStats = []
+  const result = {}
+  result['Total'] = total
+  result['Unique'] = unique.size;
+  partialStats.push(result);
+  //const partialStats = 'Total: '.concat(total, '\n', 'Unique: ', unique.size)
+  return [broken, partialStats]
 
   /*obj.map(({ href }) => {
     console.log(href)
