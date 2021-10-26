@@ -8,9 +8,17 @@ const validateArgs = (args) => {
   let argsLength = Object.keys(args).length
   let opt = args[1];
   let path = args[0];
-  const argsList = ['validate' + 'stats', 'v' + 's', 'validate' + 's', 'v' + 'stats'];
+  const argsList = ['validate', 'stats', 'v', 's'];
+  for (const key in parsedArgs) {
+    if (key === '_') {
+      continue;
+    }
+    if (!argsList.includes(key)) {
+      opt = 'help'
+      return opt
+    }
+  }
   //console.log(path);
-  //console.log(argsLength)
   const dirOrFile = verifyPath(path);
   //console.log(dirOrFile);
 

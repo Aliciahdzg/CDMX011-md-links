@@ -1,12 +1,11 @@
-const { join, extname } = require('path');
+const { join, extname, resolve } = require('path');
 const { statSync, readdirSync, lstatSync } = require('fs');
 
-const getFiles = (dir) => {
-  //console.log('Starting path analisis: '.concat(dir, '==================================='))
+const getFiles = (dir) => { //resolve(dir, file);
   const filteredPath = []
   if (statSync(dir).isDirectory()) {
     readdirSync(dir).forEach(file => {
-      const otherDir = join(dir, file)
+      const otherDir = join(dir, file);
       if (extname(file) === '.md' || extname(file) === '.markdown') {
         filteredPath.push(join(dir, file));
       }

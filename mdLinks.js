@@ -4,11 +4,9 @@ const { requestStatus } = require('./httpRequest.js');
 const { menu } = require('./help');
 const { stats } = require('./stats');
 const { statsValidate } = require('./statsValidate');
-const chalk = require('chalk');
 
 
 const mdLinks = (path, opt) => {
-
   return new Promise((resolve, reject) => {
     switch (opt) {
       case 'pathOnly':
