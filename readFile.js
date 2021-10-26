@@ -40,7 +40,6 @@ function readFiles(mdfiles) {
 }
 
 
-
 module.exports = {
   readFiles,
 }

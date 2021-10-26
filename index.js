@@ -11,32 +11,37 @@ const dir = slicedArgs[0];
 let opt = validateArgs(slicedArgs);
 
 const cli = () => {
-  console.log(chalk.bgBlue(chalk.cyanBright(figlet.textSync('MD-LINKS', {
-    font: 'Reverse',
-    horizontalLayout: 'fitted',
-    verticalLayout: 'fitted',
-    whitespaceBreak: true,
-  }))))
+
   mdLinks(dir, opt)
     .then(data => {
-      //console.log(data)
-      //if (data.isArray) {
+      console.log(chalk.bgBlue(chalk.cyanBright(figlet.textSync('MD-LINKS', {
+        font: 'Reverse',
+        horizontalLayout: 'fitted',
+        verticalLayout: 'fitted',
+        whitespaceBreak: true,
+      }))))
+      console.log('');
       data.map(allData => {
-          for (const key in allData) {
-            const value = allData[key];
-            const result = chalk.blue(key) + ':' + ' ' + chalk.magentaBright(value);
+        for (const key in allData) {
+          let result = ''
+          const value = allData[key];
+          if (value >= 200 && value < 300) {
+            console.log(chalk.blueBright(key) + ': ' + chalk.bgGreen(chalk.black(value)))
+          } else if (value >= 300 && value < 500) {
+            console.log(chalk.blueBright(key) + ': ' + chalk.bgRedBright(value))
+          } else {
+            result = chalk.blueBright(key) + ': ' + chalk.magentaBright(value);
             console.log(result);
           }
-          console.log('');
-        })
-        //}
-        //console.log()
+        }
+        console.log('');
+      })
     })
-    .catch(() => {
+    .catch((err) => {
       console.log(chalk.bgMagentaBright(chalk.black('======================Need a path and command to continue=======================')))
+      console.log(chalk.bgMagentaBright(chalk.black(err)));
       console.log(chalk.magentaBright(menu.main));
     })
-
 }
 
 

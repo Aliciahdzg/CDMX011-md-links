@@ -11,9 +11,13 @@ const requestStatus = async(data) => {
       data[i]['ok'] = req.statusText
       process.stdout.write('.');
     } catch (e) {
-
-      data[i]['status'] = e.message;
-      data[i]['fail'] = 'fail';
+      if (e.response) {
+        data[i]['status'] = e.response.status
+        data[i]['fail'] = 'fail';
+      } else {
+        data[i]['status'] = e.message;
+        data[i]['fail'] = 'fail';
+      }
 
       process.stdout.write('.');
 

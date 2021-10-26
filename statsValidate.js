@@ -17,11 +17,7 @@ const statsValidate = (obj) => {
   result['Unique'] = unique.size;
   partialStats.push(result);
   //const partialStats = 'Total: '.concat(total, '\n', 'Unique: ', unique.size)
-  return [broken, partialStats]
-
-  /*obj.map(({ href }) => {
-    console.log(href)
-  })*/
+  return [broken, partialStats];
 }
 
 module.exports = {
