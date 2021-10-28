@@ -1,12 +1,13 @@
-const { join, extname, resolve } = require('path');
+const { join, extname } = require('path');
 const { statSync, readdirSync, lstatSync } = require('fs');
 
-const getFiles = (dir) => { //resolve(dir, file);
+const getFiles = (dir) => {
   const filteredPath = []
   if (statSync(dir).isDirectory()) {
     readdirSync(dir).forEach(file => {
       const otherDir = join(dir, file);
-      if (extname(file) === '.md' || extname(file) === '.markdown') {
+      extname(file).toLowerCase;
+      if (extname(file) === '.md' || extname(file) === '.markdown' || extname(file) === '.mdown' || extname(file) === '.mkdn' || extname(file) === '.mkd') {
         filteredPath.push(join(dir, file));
       }
       try {
@@ -19,7 +20,7 @@ const getFiles = (dir) => { //resolve(dir, file);
           }
         }
       } catch (err) {
-        console.error('Path needed to continue')
+        return err;
       }
     })
   } else if (statSync(dir).isFile()) {
