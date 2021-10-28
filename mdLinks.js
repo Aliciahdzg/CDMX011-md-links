@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 const { getFiles } = require('./readDir');
 const { readFiles } = require('./readFile');
 const { requestStatus } = require('./httpRequest.js');
@@ -11,6 +12,7 @@ const mdLinks = (path, opt) => {
     switch (opt) {
       case 'pathOnly':
         const mdFiles = getFiles(path);
+        //console.log(mdFiles);
         const parsedData = readFiles(mdFiles);
         resolve(parsedData);
         break;

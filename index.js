@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+/* eslint-disable no-undef */
+
 const figlet = require('figlet');
 const chalk = require('chalk');
 const { mdLinks } = require('./mdLinks.js');
@@ -11,16 +13,15 @@ const dir = slicedArgs[0];
 let opt = validateArgs(slicedArgs);
 
 const cli = () => {
-
+  console.log(chalk.bgBlue(chalk.cyanBright(figlet.textSync('MD-LINKS', {
+    font: 'Reverse',
+    horizontalLayout: 'fitted',
+    verticalLayout: 'fitted',
+    whitespaceBreak: true,
+  }))))
+  console.log('');
   mdLinks(dir, opt)
     .then(data => {
-      console.log(chalk.bgBlue(chalk.cyanBright(figlet.textSync('MD-LINKS', {
-        font: 'Reverse',
-        horizontalLayout: 'fitted',
-        verticalLayout: 'fitted',
-        whitespaceBreak: true,
-      }))))
-      console.log('');
       data.map(allData => {
         for (const key in allData) {
           let result = ''
@@ -37,9 +38,9 @@ const cli = () => {
         console.log('');
       })
     })
-    .catch((err) => {
+    .catch(() => {
       console.log(chalk.bgMagentaBright(chalk.black('======================Need a path and command to continue=======================')))
-      console.log(chalk.bgMagentaBright(chalk.black(err)));
+        //console.log(chalk.bgMagentaBright(chalk.black(err)));
       console.log(chalk.magentaBright(menu.main));
     })
 }
