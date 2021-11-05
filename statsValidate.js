@@ -11,7 +11,7 @@ const statsValidate = (obj) => {
       broken.push(obj)
     })
     //console.log('Total: '.concat(total, '\n', 'Unique: ', unique.size))
-  partialStats = []
+  const partialStats = []
   const result = {}
   result['Total'] = total
   result['Unique'] = unique.size;
