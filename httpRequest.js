@@ -13,7 +13,7 @@ const requestStatus = async(data) => {
       process.stdout.write('.');
     } catch (e) {
       if (e.response) {
-        data[i]['status'] = e.response.status
+        data[i]['status'] = e.response.status;
         data[i]['fail'] = 'fail';
       } else {
         data[i]['status'] = e.message;
