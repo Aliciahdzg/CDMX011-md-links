@@ -56,7 +56,7 @@ Al pasar la opción `--validate` o `--v` el módulo hace una petición HTTP para
 
 ##### `--stats`
 
-Al pasar la opción `--stats` el output (salida) será un texto con estadísticas
+Al pasar la opción `--stats` o `--s` el output (salida) será un texto con estadísticas
 básicas sobre los links.
 
 ![links-stats](https://github.com/Aliciahdzg/CDMX011-md-links/blob/main/imagenesProyecto/linksStats.png)
