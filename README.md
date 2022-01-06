@@ -5,8 +5,8 @@
 * [1. Descripción](#1-descripción)
 * [2. Resumen de implementación](#2-resumen-de-implementación)
 * [3. Cómo usar la librería](#3-cómo-usar-la-librería)
-* [4. Dependencias y DevDependencies utilizadas](#4-dependencias-y-devdependencies-utilizadas)
-* [5. CLI (Command Line Interface - Interfaz de Línea de Comando)](#5-cli-command-line-interface-interfaz-de-linea-de-comando)
+* [4. CLI (Command Line Interface - Interfaz de Línea de Comando)](#4-cli-command-line-interface-interfaz-de-linea-de-comando)
+* [5. Dependencias y DevDependencies utilizadas](#5-dependencias-y-devdependencies-utilizadas)
 
 ***
 
@@ -18,75 +18,60 @@ Por cada link obtienes el texto de titulo que lo acompaña y la ruta del archivo
 
 ## 2. Resumen de implementación
 
-Antes de comenzar con la implementación lleve a cabo un diagrama de flujo en el que me base para llevar a cabo la libreria
+Antes de comenzar con la implementación lleve a cabo un diagrama de flujo para guiarme con la estructura del proyecto:
+
+[diagrama-de-flujo](https://github.com/Aliciahdzg/CDMX011-md-links/blob/main/imagenesProyecto/diagramaDeFlujoMd-links.png)
 
 ## 3. Cómo usar la librería
 
+Para poder utilizar esta libreria se requiere seguir los siguientes pasos:
 
-## 4. Dependencias y DevDependencies utilizadas
+1. Clonar localmente el repositorio.
+2. Hacer npm install para que instale las dependencias necesarias.
+3. Instalar npm link para que funcione con el nombre del script md-links.
+4. Desde la terminal ingresar los comandos y banderas de la siguiente sección.
 
 
-### 5) CLI (Command Line Interface - Interfaz de Línea de Comando)
+## 4. CLI (Command Line Interface - Interfaz de Línea de Comando)
 
-El ejecutable de nuestra aplicación debe poder ejecutarse de la siguiente
-manera a través de la **terminal**:
+Se ejectua de la siguiente manera
 
 `md-links <path-to-file> [options]`
 
 Por ejemplo:
 
-```sh
 $ md-links ./some/example.md
-./some/example.md http://algo.com/2/3/ Link a algo
-./some/example.md https://otra-cosa.net/algun-doc.html algún doc
-./some/example.md http://google.com/ Google
-```
 
-El comportamiento por defecto no debe validar si las URLs responden ok o no,
-solo debe identificar el archivo markdown (a partir de la ruta que recibe como
-argumento), analizar el archivo Markdown e imprimir los links que vaya
-encontrando, junto con la ruta del archivo donde aparece y el texto
-que hay dentro del link (truncado a 50 caracteres).
+El comportamiento por defecto no valida si las URLs responden ok o no, solo identifica el archivo markdown (a partir de la ruta que recibe como argumento), analiza el archivo Markdown e imprime los links que va encontrando, junto con la ruta del archivo donde aparece y el texto que hay dentro del link, si no encuentra ningun link no regresa nada.
+
+[links-encontrados](https://github.com/Aliciahdzg/CDMX011-md-links/blob/main/imagenesProyecto/linksEncontrados.png)
 
 #### Options
 
 ##### `--validate`
 
-Si pasamos la opción `--validate`, el módulo debe hacer una petición HTTP para
-averiguar si el link funciona o no. Si el link resulta en una redirección a una
-URL que responde ok, entonces consideraremos el link como ok.
+Al pasar la opción `--validate` o `--v` el módulo hace una petición HTTP para averiguar si el link funciona o no. Vemos en el _output_ que incluye la palabra `ok` o `fail` segun corresponda a un status valido o no debajo del codigo de status o el texto en caso de ser un codigo fallido
 
-Por ejemplo:
-
-```sh
-$ md-links ./some/example.md --validate
-./some/example.md http://algo.com/2/3/ ok 200 Link a algo
-./some/example.md https://otra-cosa.net/algun-doc.html fail 404 algún doc
-./some/example.md http://google.com/ ok 301 Google
-```
-
-Vemos que el _output_ en este caso incluye la palabra `ok` o `fail` después de
-la URL, así como el status de la respuesta recibida a la petición HTTP a dicha
-URL.
+[links-validate](https://github.com/Aliciahdzg/CDMX011-md-links/blob/main/imagenesProyecto/linksValidate.png)
 
 ##### `--stats`
 
-Si pasamos la opción `--stats` el output (salida) será un texto con estadísticas
+Al pasar la opción `--stats` el output (salida) será un texto con estadísticas
 básicas sobre los links.
 
-```sh
-$ md-links ./some/example.md --stats
-Total: 3
-Unique: 3
-```
+[links-stats](https://github.com/Aliciahdzg/CDMX011-md-links/blob/main/imagenesProyecto/linksStats.png)
 
 También podemos combinar `--stats` y `--validate` para obtener estadísticas que
 necesiten de los resultados de la validación.
 
-```sh
-$ md-links ./some/example.md --stats --validate
-Total: 3
-Unique: 3
-Broken: 1
-```
+[links-validate-stats](https://github.com/Aliciahdzg/CDMX011-md-links/tree/main/imagenesProyecto)
+
+### 5. Dependencias y DevDependencies utilizadas
+
+* Axios
+* Chalk
+* Figlet
+* Minimist
+* Eslint
+* Jest
 
