@@ -20,7 +20,7 @@ Por cada link obtienes el texto de titulo que lo acompaña y la ruta del archivo
 
 Antes de comenzar con la implementación lleve a cabo un diagrama de flujo para guiarme con la estructura del proyecto:
 
-[diagrama-de-flujo](https://github.com/Aliciahdzg/CDMX011-md-links/blob/main/imagenesProyecto/diagramaDeFlujoMd-links.png)
+![diagrama-de-flujo](https://github.com/Aliciahdzg/CDMX011-md-links/blob/main/imagenesProyecto/diagramaDeFlujoMd-links.png)
 
 ## 3. Cómo usar la librería
 
@@ -44,7 +44,7 @@ $ md-links ./some/example.md
 
 El comportamiento por defecto no valida si las URLs responden ok o no, solo identifica el archivo markdown (a partir de la ruta que recibe como argumento), analiza el archivo Markdown e imprime los links que va encontrando, junto con la ruta del archivo donde aparece y el texto que hay dentro del link, si no encuentra ningun link no regresa nada.
 
-[links-encontrados](https://github.com/Aliciahdzg/CDMX011-md-links/blob/main/imagenesProyecto/linksEncontrados.png)
+![links-encontrados](https://github.com/Aliciahdzg/CDMX011-md-links/blob/main/imagenesProyecto/linksEncontrados.png)
 
 #### Options
 
@@ -52,19 +52,19 @@ El comportamiento por defecto no valida si las URLs responden ok o no, solo iden
 
 Al pasar la opción `--validate` o `--v` el módulo hace una petición HTTP para averiguar si el link funciona o no. Vemos en el _output_ que incluye la palabra `ok` o `fail` segun corresponda a un status valido o no debajo del codigo de status o el texto en caso de ser un codigo fallido
 
-[links-validate](https://github.com/Aliciahdzg/CDMX011-md-links/blob/main/imagenesProyecto/linksValidate.png)
+![links-validate](https://github.com/Aliciahdzg/CDMX011-md-links/blob/main/imagenesProyecto/linksValidate.png)
 
 ##### `--stats`
 
 Al pasar la opción `--stats` el output (salida) será un texto con estadísticas
 básicas sobre los links.
 
-[links-stats](https://github.com/Aliciahdzg/CDMX011-md-links/blob/main/imagenesProyecto/linksStats.png)
+![links-stats](https://github.com/Aliciahdzg/CDMX011-md-links/blob/main/imagenesProyecto/linksStats.png)
 
 También podemos combinar `--stats` y `--validate` para obtener estadísticas que
 necesiten de los resultados de la validación.
 
-[links-validate-stats](https://github.com/Aliciahdzg/CDMX011-md-links/tree/main/imagenesProyecto)
+![links-validate-stats](https://github.com/Aliciahdzg/CDMX011-md-links/tree/main/imagenesProyecto)
 
 ### 5. Dependencias y DevDependencies utilizadas
 
