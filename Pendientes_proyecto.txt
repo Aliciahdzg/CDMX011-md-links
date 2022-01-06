@@ -1,0 +1,8 @@
+Que puedo mejorar de mi proyecto:
+ 
+ -Uso de promise.all para que las promesas se resuelvan todas juntas y no tarde en hacer el request del status.
+  Revisar concepto de promesas concurrentes. 
+ -Convertir mi codigo a un modulo npm, con las configuraciones correspondientes en el package.json
+ -Crear la funcion extractora de links y mandarla llamar en donde la necesito. 
+ -Utilizar includes en donde se analizan las extensiones de los archivos.
+ -Modificar la sintaxis de la creación de los objetos (nueva sintaxis para no repetir codigo)
