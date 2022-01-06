@@ -1,4 +1,5 @@
 const { readFileSync } = require('fs');
+const { extractLinks } = require('./extractLinks')
 
 function readFiles(mdfiles) {
   const linksFound = []
@@ -7,33 +8,7 @@ function readFiles(mdfiles) {
     const fileData = readFileSync(file, 'utf8')
     const result = fileData.split('\n');
 
-    result.forEach(line => {
-      if (line.includes('http') === true && line.includes('![') === false && line.includes('href') == false) {
-        const splitData = line.split('](');
-        if (splitData.length >= 2) {
-          let link = splitData[1].replace(')', '').replace('(', '').trim()
-          if (link.includes(' ')) {
-            let justLink = link.split(' ')[0].replace(',', '').trim()
-            let test = justLink.charAt(justLink.length - 1)
-            if (test === '.' || test === ')') {
-              let fixedLink = justLink.slice(0, -1)
-              justLink = fixedLink
-            }
-            link = justLink
-          } else if (link.charAt(link.length - 1) === '.') {
-            let fixedLink = link.slice(0, -1)
-            link = fixedLink
-          }
-          const splitText = splitData[0].replace('*', '').replace('[ ]', '').split('[');
-          const text = splitText[1];
-          let model = {}
-          model['text'] = text
-          model['href'] = link
-          model['file'] = file
-          linksFound.push(model)
-        }
-      }
-    })
+    extractLinks(result, linksFound, file);
   })
   return linksFound
 }

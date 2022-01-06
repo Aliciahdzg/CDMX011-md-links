@@ -24,9 +24,7 @@ function extractLinks(lines, arr, file) {
                 href: link,
                 file
             }
-            /* model['text'] = text
-            model['href'] = link
-            model['file'] = file */
+            console.log(model)
             arr.push(model)
           }
         }
